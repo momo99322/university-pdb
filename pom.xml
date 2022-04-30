@@ -23,5 +23,6 @@
     <modules>
         <module>university-api</module>
         <module>university-core</module>
+        <module>university-gateway</module>
     </modules>
 </project>

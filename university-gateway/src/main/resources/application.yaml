@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: university_user
+    password: university_pass
+    url: jdbc:postgresql://localhost:5432/university
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+
+  thymeleaf:
+    prefix: classpath:/html/
