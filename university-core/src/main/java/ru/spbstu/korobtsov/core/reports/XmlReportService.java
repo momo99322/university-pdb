@@ -21,16 +21,6 @@ public class XmlReportService extends GenericReportService {
     }
 
     @Override
-    public String generateReportByLectureName(String name) {
-        return null;
-    }
-
-    @Override
-    public String generateReportByStudentName(String name) {
-        return null;
-    }
-
-    @Override
     public MimeType getType() {
         return APPLICATION_XML;
     }
