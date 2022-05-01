@@ -15,9 +15,9 @@
     <name>university</name>
     <properties>
         <java.version>17</java.version>
-
         <springboot.version>2.6.7</springboot.version>
         <postgres.version>42.3.4</postgres.version>
+        <log4j.version>2.17.2</log4j.version>
     </properties>
 
     <modules>

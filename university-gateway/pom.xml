@@ -13,16 +13,24 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
+        <!--University app-->
         <dependency>
             <groupId>ru.spbstu.korobtsov</groupId>
             <artifactId>university-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${springboot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

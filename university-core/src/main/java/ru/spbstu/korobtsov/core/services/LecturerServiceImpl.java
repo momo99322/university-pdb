@@ -1,5 +1,7 @@
 package ru.spbstu.korobtsov.core.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.LecturerService;
 import ru.spbstu.korobtsov.api.domain.Lecturer;
@@ -9,6 +11,8 @@ import ru.spbstu.korobtsov.core.repositories.LecturerRepository;
 @Service
 public class LecturerServiceImpl implements LecturerService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LecturerServiceImpl.class);
+
     private final LecturerRepository lecturerRepository;
 
     public LecturerServiceImpl(LecturerRepository lecturerRepository) {
@@ -17,26 +21,40 @@ public class LecturerServiceImpl implements LecturerService {
 
     @Override
     public Lecturer create(Lecturer lecturer) {
-        return lecturerRepository.save(lecturer);
+        LOGGER.debug("Creating {}", lecturer);
+        var createdLecturer = lecturerRepository.save(lecturer);
+        LOGGER.debug("Created {}", createdLecturer);
+        return createdLecturer;
     }
 
     @Override
     public Iterable<Lecturer> readAll() {
-        return lecturerRepository.findAll();
+        LOGGER.debug("Finding all");
+        var lecturers = lecturerRepository.findAll();
+        LOGGER.debug("Found {}", lecturers);
+        return lecturers;
     }
 
     @Override
     public Lecturer readOne(String id) {
-        return lecturerRepository.findById(id).orElseThrow(() -> new LecturerNotFoundException(id));
+        LOGGER.debug("Finding by id={}", id);
+        var lecturer = lecturerRepository.findById(id).orElseThrow(() -> new LecturerNotFoundException(id));
+        LOGGER.debug("Found {}", lecturer);
+        return lecturer;
     }
 
     @Override
     public Lecturer update(Lecturer lecturer) {
-        return lecturerRepository.save(lecturer);
+        LOGGER.debug("Updating {}", lecturer);
+        var updatedLecturer = lecturerRepository.save(lecturer);
+        LOGGER.debug("Updated {}", updatedLecturer);
+        return updatedLecturer;
     }
 
     @Override
     public void delete(String id) {
+        LOGGER.debug("Deleting by id={}", id);
         lecturerRepository.deleteById(id);
+        LOGGER.debug("Deleted by id={}", id);
     }
 }

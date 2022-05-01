@@ -10,4 +10,4 @@ spring:
     database: postgresql
 
   thymeleaf:
-    prefix: classpath:/html/
+    prefix: classpath:html/
