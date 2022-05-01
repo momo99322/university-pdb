@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.core.reports;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON;
 @Service
 public class JsonReportService extends GenericReportService {
 
+    private final Gson gson = new Gson();
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonReportService.class);
 
     public JsonReportService(StudentService studentService, LectureService lectureService) {
@@ -27,11 +30,11 @@ public class JsonReportService extends GenericReportService {
 
     @Override
     public String marshallStudent(Student student) {
-        return student.toString();
+        return gson.toJson(student);
     }
 
     @Override
     public String marshallLecture(Lecture lecture) {
-        return lecture.toString();
+        return gson.toJson(lecture);
     }
 }
