@@ -10,6 +10,8 @@ public interface StudentService {
 
     Student readOne(String id);
 
+    Student readOneByName(String name);
+
     Student update(Student student);
 
     void delete(String id);

@@ -2,19 +2,25 @@ package ru.spbstu.korobtsov.gateway.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MimeType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Student;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/students")
 public class StudentController {
 
     private final StudentService studentService;
+    private final Map<MimeType, ReportService> reportServiceMap;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, Map<MimeType, ReportService> reportServiceMap) {
         this.studentService = studentService;
+        this.reportServiceMap = reportServiceMap;
     }
 
     @GetMapping
@@ -61,5 +67,14 @@ public class StudentController {
     public String delete(@PathVariable String id) {
         studentService.delete(id);
         return "redirect:/students";
+    }
+
+    @GetMapping("/report")
+    public String getReportByStudentName(@RequestParam("name") String name,
+                                         @RequestParam("type") MimeType type,
+                                         Model model) {
+        var reportService = reportServiceMap.get(type);
+        model.addAttribute("report", reportService.generateReportByStudentName(name));
+        return "students/student-report";
     }
 }

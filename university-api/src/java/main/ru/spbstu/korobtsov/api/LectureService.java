@@ -10,6 +10,8 @@ public interface LectureService {
 
     Lecture readOne(String id);
 
+    Lecture readOneByName(String name);
+
     Lecture update(Lecture lecture);
 
     void delete(String id);

@@ -38,8 +38,16 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Lecture readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
-        var lecture = lectureRepository.findById(id).orElseThrow(() -> new LectureNotFoundException(id));
-        LOGGER.debug("Found {}", lecture);
+        var lecture = lectureRepository.findById(id).orElseThrow(() -> new LectureNotFoundException("Lecture with id=%s not found".formatted(id)));
+        LOGGER.debug("Found by id={} {}", id, lecture);
+        return lecture;
+    }
+
+    @Override
+    public Lecture readOneByName(String name) {
+        LOGGER.debug("Finding by name={}", name);
+        var lecture = lectureRepository.findByName(name).orElseThrow(() -> new LectureNotFoundException("Lecture with name=%s not found".formatted(name)));
+        LOGGER.debug("Found by name={} {}", name, lecture);
         return lecture;
     }
 

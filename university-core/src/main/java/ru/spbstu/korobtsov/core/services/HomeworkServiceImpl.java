@@ -38,7 +38,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     @Override
     public Homework readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
-        var homework = homeworkRepository.findById(id).orElseThrow(() -> new HomeworkNotFoundException(id));
+        var homework = homeworkRepository.findById(id).orElseThrow(() -> new HomeworkNotFoundException("Homework with=id %s not found".formatted(id)));
         LOGGER.debug("Found {}", homework);
         return homework;
     }

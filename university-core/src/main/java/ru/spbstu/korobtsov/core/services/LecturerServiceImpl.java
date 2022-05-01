@@ -38,7 +38,7 @@ public class LecturerServiceImpl implements LecturerService {
     @Override
     public Lecturer readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
-        var lecturer = lecturerRepository.findById(id).orElseThrow(() -> new LecturerNotFoundException(id));
+        var lecturer = lecturerRepository.findById(id).orElseThrow(() -> new LecturerNotFoundException("Lecturer with=id %s not found".formatted(id)));
         LOGGER.debug("Found {}", lecturer);
         return lecturer;
     }

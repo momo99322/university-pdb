@@ -38,7 +38,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
-        var student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        var student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id=%s not found".formatted(id)));
+        LOGGER.debug("Found {}", student);
+        return student;
+    }
+
+    @Override
+    public Student readOneByName(String name) {
+        LOGGER.debug("Finding by name={}", name);
+        var student = studentRepository.findByName(name).orElseThrow(() -> new StudentNotFoundException("Student with name=%s not found".formatted(name)));
         LOGGER.debug("Found {}", student);
         return student;
     }
