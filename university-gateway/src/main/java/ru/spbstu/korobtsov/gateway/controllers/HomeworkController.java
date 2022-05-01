@@ -8,7 +8,7 @@ import ru.spbstu.korobtsov.api.HomeworkService;
 import ru.spbstu.korobtsov.api.domain.Homework;
 
 @Controller
-@RequestMapping("/homeworks")
+@RequestMapping("/homework")
 public class HomeworkController {
 
     private final HomeworkService homeworkService;
@@ -19,9 +19,9 @@ public class HomeworkController {
 
     @GetMapping
     public String showAll(Model model) {
-        var homeworks = homeworkService.readAll();
-        model.addAttribute("homeworks", homeworks);
-        return "homeworks/homeworks";
+        var homework = homeworkService.readAll();
+        model.addAttribute("homework", homework);
+        return "homework/homework";
     }
 
     @GetMapping(path = "/{id}")
@@ -30,18 +30,18 @@ public class HomeworkController {
 
         var student = homeworkService.readOne(id);
         model.addAttribute("homework", student);
-        return "homeworks/update-homework";
+        return "homework/update-homework";
     }
 
     @PostMapping
     public String addOne(@RequestBody Homework homework,
                          BindingResult result) {
         if (result.hasErrors()) {
-            return "homeworks/add-homework";
+            return "homework/add-homework";
         }
 
         homeworkService.create(homework);
-        return "redirect:/homeworks";
+        return "redirect:/homework";
     }
 
     @PutMapping("/{id}")
@@ -50,16 +50,16 @@ public class HomeworkController {
                          BindingResult result) {
         if (result.hasErrors()) {
             homework.setId(id);
-            return "homeworks/update-homework";
+            return "homework/update-homework";
         }
 
         homeworkService.update(homework);
-        return "redirect:/homeworks";
+        return "redirect:/homework";
     }
 
     @DeleteMapping(path = "/{id}")
     public String delete(@PathVariable String id) {
         homeworkService.delete(id);
-        return "redirect:/homeworks";
+        return "redirect:/homework";
     }
 }
