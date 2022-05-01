@@ -6,14 +6,11 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "students")
+@Table(name = "attendance")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
-public class Student {
-
+public class Attendance {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -21,11 +18,12 @@ public class Student {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-
-    private String name;
-
-    private String email;
-
-    private String phone;
-
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+    @Column(columnDefinition = "boolean default false")
+    private boolean attendance;
 }

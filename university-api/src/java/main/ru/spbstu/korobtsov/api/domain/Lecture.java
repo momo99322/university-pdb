@@ -1,33 +1,34 @@
 package ru.spbstu.korobtsov.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name ="lectures")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Lecture {
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     private String id;
 
     private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Instant time;
 
-    public String getName() {
-        return name;
-    }
+    @ManyToOne
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Id
-    @GeneratedValue
-    public String getId() {
-        return id;
-    }
 }

@@ -1,23 +1,28 @@
 package ru.spbstu.korobtsov.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "lecturers")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Lecturer {
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     private String id;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    private String name;
 
-    @Id
-    @GeneratedValue
-    public String getId() {
-        return id;
-    }
+    private String email;
 }

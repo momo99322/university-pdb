@@ -27,11 +27,11 @@ public class JsonReportService extends GenericReportService {
 
     @Override
     public String marshallStudent(Student student) {
-        return null;
+        return student.toString();
     }
 
     @Override
     public String marshallLecture(Lecture lecture) {
-        return null;
+        return lecture.toString();
     }
 }
