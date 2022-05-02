@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.spbstu.korobtsov.api.HomeworkService;
 import ru.spbstu.korobtsov.api.domain.Homework;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/homework")
 public class HomeworkController {
@@ -34,7 +36,7 @@ public class HomeworkController {
     }
 
     @PostMapping
-    public String addOne(@RequestBody Homework homework,
+    public String addOne(@RequestBody @Valid Homework homework,
                          BindingResult result) {
         if (result.hasErrors()) {
             return "homework/add-homework";
@@ -45,7 +47,7 @@ public class HomeworkController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody Homework homework,
+    public String update(@RequestBody @Valid Homework homework,
                          @PathVariable String id,
                          BindingResult result) {
         if (result.hasErrors()) {
