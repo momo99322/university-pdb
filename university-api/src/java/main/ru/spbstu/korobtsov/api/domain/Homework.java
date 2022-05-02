@@ -8,25 +8,22 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Entity
-@Table(name = "homework")
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 @Setter
 @Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "homework")
 public class Homework {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     private String title;
 
-    private String Content;
+    private String content;
 
     @Min(0)
     @Max(5)

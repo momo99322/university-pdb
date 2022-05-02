@@ -7,20 +7,17 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name ="lectures")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "lectures")
 public class Lecture {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     private String name;
@@ -30,5 +27,4 @@ public class Lecture {
     @ManyToOne
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
-
 }
