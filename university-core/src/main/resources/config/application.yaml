@@ -3,3 +3,4 @@ spring:
     hibernate:
       ddl-auto: create
     database: postgresql
+    open-in-view: false

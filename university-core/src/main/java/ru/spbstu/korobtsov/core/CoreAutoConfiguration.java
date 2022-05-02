@@ -4,10 +4,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.util.MimeType;
 import ru.spbstu.korobtsov.api.ReportService;
@@ -22,6 +19,12 @@ import static java.util.stream.Collectors.toMap;
 @EnableJpaRepositories
 @EnableConfigurationProperties
 @EntityScan(basePackages = "ru.spbstu.korobtsov.api.domain")
+@PropertySources(
+        {
+                @PropertySource("config/application.yaml"),
+                @PropertySource("application.yaml")
+        }
+)
 @ComponentScan(basePackageClasses = CoreAutoConfiguration.class)
 public class CoreAutoConfiguration {
 
