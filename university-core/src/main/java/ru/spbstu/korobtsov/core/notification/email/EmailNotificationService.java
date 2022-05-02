@@ -1,6 +1,7 @@
 package ru.spbstu.korobtsov.core.notification.email;
 
-public interface EmailNotificationService {
+import ru.spbstu.korobtsov.core.notification.NotificationService;
 
-    void sendEmail(String from, String to, String message);
+public interface EmailNotificationService extends NotificationService {
+
 }

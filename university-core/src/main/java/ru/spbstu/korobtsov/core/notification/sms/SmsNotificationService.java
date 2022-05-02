@@ -1,6 +1,7 @@
 package ru.spbstu.korobtsov.core.notification.sms;
 
-public interface SmsNotificationService {
+import ru.spbstu.korobtsov.core.notification.NotificationService;
 
-    void sendSms(String from, String to, String message);
+public interface SmsNotificationService extends NotificationService {
+
 }
