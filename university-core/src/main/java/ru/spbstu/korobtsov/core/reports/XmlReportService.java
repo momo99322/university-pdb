@@ -18,10 +18,11 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_XML;
 public class XmlReportService extends GenericReportService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlReportService.class);
-    private final StringWriter sw = new StringWriter();
+    private final StringWriter sw;
 
     public XmlReportService(StudentService studentService, LectureService lectureService) {
         super(LOGGER, studentService, lectureService);
+        this.sw = new StringWriter();
     }
 
     @Override

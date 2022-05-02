@@ -15,12 +15,13 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON;
 @Service
 public class JsonReportService extends GenericReportService {
 
-    private final Gson gson = new Gson();
+    private final Gson gson;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonReportService.class);
 
-    public JsonReportService(StudentService studentService, LectureService lectureService) {
+    public JsonReportService(StudentService studentService, LectureService lectureService, Gson gson) {
         super(LOGGER, studentService, lectureService);
+        this.gson = gson;
     }
 
     @Override
