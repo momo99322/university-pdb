@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy.MM.dd HH:mm:ss,SSS} [%p] [%t] %F:%L:%M - %msg%n</Property>
+        <Property name="APP_LOG_ROOT">./logs</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="universityTrace" fileName="${APP_LOG_ROOT}/university.log"
+                     filePattern="${APP_LOG_ROOT}/university-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="springLog" fileName="${APP_LOG_ROOT}/spring.log"
+                     filePattern="${APP_LOG_ROOT}/spring-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="allTraceLog" fileName="${APP_LOG_ROOT}/all-trace.log"
+                     filePattern="${APP_LOG_ROOT}/all-trace-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="ru.spbstu.korobtsov" level="TRACE" additivity="false">
+            <AppenderRef ref="allTraceLog" level="TRACE"/>
+            <AppenderRef ref="universityTrace" level="TRACE"/>
+            <AppenderRef ref="Console" level="DEBUG"/>
+        </Logger>
+
+        <Logger name="org.springframework" level="TRACE" additivity="false">
+            <AppenderRef ref="allTraceLog" level="TRACE"/>
+            <AppenderRef ref="springLog" level="TRACE"/>
+            <AppenderRef ref="Console" level="INFO"/>
+        </Logger>
+
+        <Root level="ALL">
+            <AppenderRef ref="Console" level="INFO"/>
+            <AppenderRef ref="allTraceLog" level="TRACE"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
