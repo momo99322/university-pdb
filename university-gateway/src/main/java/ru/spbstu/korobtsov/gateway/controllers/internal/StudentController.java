@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.gateway.controllers;
+package ru.spbstu.korobtsov.gateway.controllers.internal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,7 +74,8 @@ public class StudentController {
                                          @RequestParam("type") MimeType type,
                                          Model model) {
         var reportService = reportServiceMap.get(type);
-        model.addAttribute("report", reportService.generateReportByStudentName(name));
+        var report = reportService.generateReportByStudentName(name);
+        model.addAttribute("report", report);
         return "students/student-report";
     }
 }

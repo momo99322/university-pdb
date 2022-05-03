@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.gateway.controllers;
+package ru.spbstu.korobtsov.gateway.controllers.internal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.gateway.controllers.advice;
+package ru.spbstu.korobtsov.gateway.controllers.internal.advice;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
