@@ -1,17 +1,15 @@
 package ru.spbstu.korobtsov.core.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Student;
 import ru.spbstu.korobtsov.api.exceptions.StudentNotFoundException;
 import ru.spbstu.korobtsov.core.repositories.StudentRepository;
 
+@Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private final StudentRepository studentRepository;
 
@@ -21,48 +19,48 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student create(Student student) {
-        LOGGER.debug("Creating {}", student);
+        log.debug("Creating {}", student);
         var createdStudent = studentRepository.save(student);
-        LOGGER.debug("Created {}", createdStudent);
+        log.debug("Created {}", createdStudent);
         return createdStudent;
     }
 
     @Override
     public Iterable<Student> readAll() {
-        LOGGER.debug("Finding all");
+        log.debug("Finding all");
         var students = studentRepository.findAll();
-        LOGGER.debug("Found {}", students);
+        log.debug("Found {}", students);
         return students;
     }
 
     @Override
     public Student readOne(String id) {
-        LOGGER.debug("Finding by id={}", id);
+        log.debug("Finding by id={}", id);
         var student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id=%s not found".formatted(id)));
-        LOGGER.debug("Found  by id={}, {}", id, student);
+        log.debug("Found  by id={}, {}", id, student);
         return student;
     }
 
     @Override
     public Student readOneByName(String name) {
-        LOGGER.debug("Finding by name={}", name);
+        log.debug("Finding by name={}", name);
         var student = studentRepository.findByName(name).orElseThrow(() -> new StudentNotFoundException("Student with name=%s not found".formatted(name)));
-        LOGGER.debug("Found by name={}, {}", name, student);
+        log.debug("Found by name={}, {}", name, student);
         return student;
     }
 
     @Override
     public Student update(Student student) {
-        LOGGER.debug("Updating {}", student);
+        log.debug("Updating {}", student);
         var updatedStudent = studentRepository.save(student);
-        LOGGER.debug("Updated {}", updatedStudent);
+        log.debug("Updated {}", updatedStudent);
         return updatedStudent;
     }
 
     @Override
     public void delete(String id) {
-        LOGGER.debug("Deleting by id={}", id);
+        log.debug("Deleting by id={}", id);
         studentRepository.deleteById(id);
-        LOGGER.debug("Deleted by id={}", id);
+        log.debug("Deleted by id={}", id);
     }
 }

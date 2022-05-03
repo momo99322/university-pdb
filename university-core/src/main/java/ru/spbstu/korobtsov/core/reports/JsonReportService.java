@@ -1,8 +1,7 @@
 package ru.spbstu.korobtsov.core.reports;
 
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
 import ru.spbstu.korobtsov.api.LectureService;
@@ -12,15 +11,14 @@ import ru.spbstu.korobtsov.api.domain.Student;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON;
 
+@Slf4j
 @Service
 public class JsonReportService extends GenericReportService {
 
     private final Gson gson;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonReportService.class);
-
     public JsonReportService(StudentService studentService, LectureService lectureService, Gson gson) {
-        super(LOGGER, studentService, lectureService);
+        super(log, studentService, lectureService);
         this.gson = gson;
     }
 

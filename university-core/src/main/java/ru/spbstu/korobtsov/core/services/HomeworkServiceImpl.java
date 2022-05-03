@@ -1,17 +1,15 @@
 package ru.spbstu.korobtsov.core.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.HomeworkService;
 import ru.spbstu.korobtsov.api.domain.Homework;
 import ru.spbstu.korobtsov.api.exceptions.HomeworkNotFoundException;
 import ru.spbstu.korobtsov.core.repositories.HomeworkRepository;
 
+@Slf4j
 @Service
 public class HomeworkServiceImpl implements HomeworkService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(HomeworkServiceImpl.class);
 
     private final HomeworkRepository homeworkRepository;
 
@@ -21,40 +19,40 @@ public class HomeworkServiceImpl implements HomeworkService {
 
     @Override
     public Homework create(Homework homework) {
-        LOGGER.debug("Creating {}", homework);
+        log.debug("Creating {}", homework);
         var createdHomework = homeworkRepository.save(homework);
-        LOGGER.debug("Created {}", createdHomework);
+        log.debug("Created {}", createdHomework);
         return createdHomework;
     }
 
     @Override
     public Iterable<Homework> readAll() {
-        LOGGER.debug("Finding all");
+        log.debug("Finding all");
         var homework = homeworkRepository.findAll();
-        LOGGER.debug("Found {}", homework);
+        log.debug("Found {}", homework);
         return homework;
     }
 
     @Override
     public Homework readOne(String id) {
-        LOGGER.debug("Finding by id={}", id);
+        log.debug("Finding by id={}", id);
         var homework = homeworkRepository.findById(id).orElseThrow(() -> new HomeworkNotFoundException("Homework with=id %s not found".formatted(id)));
-        LOGGER.debug("Found by id={}, {}", id, homework);
+        log.debug("Found by id={}, {}", id, homework);
         return homework;
     }
 
     @Override
     public Homework update(Homework homework) {
-        LOGGER.debug("Updating {}", homework);
+        log.debug("Updating {}", homework);
         var updatedHomework = homeworkRepository.save(homework);
-        LOGGER.debug("Updated {}", updatedHomework);
+        log.debug("Updated {}", updatedHomework);
         return updatedHomework;
     }
 
     @Override
     public void delete(String id) {
-        LOGGER.debug("Deleting by id={}", id);
+        log.debug("Deleting by id={}", id);
         homeworkRepository.deleteById(id);
-        LOGGER.debug("Deleted by id={}", id);
+        log.debug("Deleted by id={}", id);
     }
 }

@@ -1,7 +1,6 @@
 package ru.spbstu.korobtsov.core.reports;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
 import ru.spbstu.korobtsov.api.LectureService;
@@ -14,14 +13,14 @@ import java.io.StringWriter;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_XML;
 
+@Slf4j
 @Service
 public class XmlReportService extends GenericReportService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XmlReportService.class);
     private final StringWriter sw;
 
     public XmlReportService(StudentService studentService, LectureService lectureService) {
-        super(LOGGER, studentService, lectureService);
+        super(log, studentService, lectureService);
         this.sw = new StringWriter();
     }
 
