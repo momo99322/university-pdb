@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.api.exceptions;
+package ru.spbstu.korobtsov.api.exceptions.notfound;
 
 public class StudentNotFoundException extends BasicNotFoundException {
 

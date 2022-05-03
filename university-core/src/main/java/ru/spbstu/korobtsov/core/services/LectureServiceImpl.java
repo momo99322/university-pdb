@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.LectureService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
-import ru.spbstu.korobtsov.api.exceptions.LectureNotFoundException;
+import ru.spbstu.korobtsov.api.exceptions.notfound.LectureNotFoundException;
 import ru.spbstu.korobtsov.core.repositories.LectureRepository;
 
 @Slf4j

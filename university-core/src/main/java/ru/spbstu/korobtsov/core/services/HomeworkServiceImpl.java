@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.HomeworkService;
 import ru.spbstu.korobtsov.api.domain.Homework;
-import ru.spbstu.korobtsov.api.exceptions.HomeworkNotFoundException;
+import ru.spbstu.korobtsov.api.exceptions.notfound.HomeworkNotFoundException;
 import ru.spbstu.korobtsov.core.repositories.HomeworkRepository;
 
 @Slf4j
