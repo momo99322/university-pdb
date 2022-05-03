@@ -39,7 +39,7 @@ public class LectureServiceImpl implements LectureService {
     public Lecture readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
         var lecture = lectureRepository.findById(id).orElseThrow(() -> new LectureNotFoundException("Lecture with id=%s not found".formatted(id)));
-        LOGGER.debug("Found by id={} {}", id, lecture);
+        LOGGER.debug("Found by id={}, {}", id, lecture);
         return lecture;
     }
 
@@ -47,7 +47,7 @@ public class LectureServiceImpl implements LectureService {
     public Lecture readOneByName(String name) {
         LOGGER.debug("Finding by name={}", name);
         var lecture = lectureRepository.findByName(name).orElseThrow(() -> new LectureNotFoundException("Lecture with name=%s not found".formatted(name)));
-        LOGGER.debug("Found by name={} {}", name, lecture);
+        LOGGER.debug("Found by name={}, {}", name, lecture);
         return lecture;
     }
 

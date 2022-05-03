@@ -39,7 +39,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     public Homework readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
         var homework = homeworkRepository.findById(id).orElseThrow(() -> new HomeworkNotFoundException("Homework with=id %s not found".formatted(id)));
-        LOGGER.debug("Found {}", homework);
+        LOGGER.debug("Found by id={}, {}", id, homework);
         return homework;
     }
 

@@ -39,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
     public Student readOne(String id) {
         LOGGER.debug("Finding by id={}", id);
         var student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id=%s not found".formatted(id)));
-        LOGGER.debug("Found {}", student);
+        LOGGER.debug("Found  by id={}, {}", id, student);
         return student;
     }
 
@@ -47,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
     public Student readOneByName(String name) {
         LOGGER.debug("Finding by name={}", name);
         var student = studentRepository.findByName(name).orElseThrow(() -> new StudentNotFoundException("Student with name=%s not found".formatted(name)));
-        LOGGER.debug("Found {}", student);
+        LOGGER.debug("Found by name={}, {}", name, student);
         return student;
     }
 
