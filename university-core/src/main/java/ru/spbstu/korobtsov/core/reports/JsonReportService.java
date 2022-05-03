@@ -1,6 +1,7 @@
 package ru.spbstu.korobtsov.core.reports;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
@@ -15,11 +16,11 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON;
 @Service
 public class JsonReportService extends GenericReportService {
 
-    private final Gson gson;
+    private final ObjectMapper objectMapper;
 
-    public JsonReportService(StudentService studentService, LectureService lectureService, Gson gson) {
+    public JsonReportService(StudentService studentService, LectureService lectureService, ObjectMapper objectMapper) {
         super(log, studentService, lectureService);
-        this.gson = gson;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -28,12 +29,14 @@ public class JsonReportService extends GenericReportService {
     }
 
     @Override
+    @SneakyThrows
     public String marshallStudent(Student student) {
-        return gson.toJson(student);
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
     }
 
     @Override
+    @SneakyThrows
     public String marshallLecture(Lecture lecture) {
-        return gson.toJson(lecture);
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(lecture);
     }
 }
