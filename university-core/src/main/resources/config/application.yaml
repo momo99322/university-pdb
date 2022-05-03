@@ -4,3 +4,7 @@ spring:
       ddl-auto: create
     database: postgresql
     open-in-view: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

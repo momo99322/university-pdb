@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>Add student</title>
 </head>
 <body>
+<nav class="nav__container">
+    <ul class="nav__items">
+        <li class="nav__item"><a href="/students" class="nav__href active">Студенты</a></li>
+        <li class="nav__item"><a href="/lectures" class="nav__href">Лекции</a></li>
+        <li class="nav__item"><a href="/lecturers" class="nav__href">Лекторы</a></li>
+        <li class="nav__item"><a href="/homework" class="nav__href">Домашняя работа</a></li>
+    </ul>
+</nav>
 
+<div class="form__container">
+    <form action="/students" th:method="POST" class="form__data">
+        <div class="data__field">
+            <label th:text="Имя"></label>
+            <input th:name="name" type="text">
+        </div>
+        <div class="data__field">
+            <label th:text="Почта"></label>
+            <input th:name="email" type="text">
+        </div>
+        <div class="data__field">
+            <label th:text="Телефон"></label>
+            <input th:name="phone" type="text">
+        </div>
+        <input type="submit" value="Сохранить">
+    </form>
+</div>
 </body>
 </html>

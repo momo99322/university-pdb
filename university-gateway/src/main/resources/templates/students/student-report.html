@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>Students report</title>
 </head>
 <body>
+<nav class="nav__container">
+    <ul class="nav__items">
+        <li class="nav__item"><a href="/students" class="nav__href active">Студенты</a></li>
+        <li class="nav__item"><a href="/lectures" class="nav__href">Лекции</a></li>
+        <li class="nav__item"><a href="/lecturers" class="nav__href">Лекторы</a></li>
+        <li class="nav__item"><a href="/homework" class="nav__href">Домашняя работа</a></li>
+    </ul>
+</nav>
+
+<div class="report">
+    <h1 th:text="'Отчёт о посещаемости студента ' + ${name}"></h1>
+    <pre th:text="${report}"></pre>
+</div>
 
 </body>
 </html>

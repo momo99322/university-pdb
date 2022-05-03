@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>Students</title>
 </head>
 <body>
+<nav class="nav__container">
+    <ul class="nav__items">
+        <li class="nav__item"><a href="/students" class="nav__href active">Студенты</a></li>
+        <li class="nav__item"><a href="/lectures" class="nav__href">Лекции</a></li>
+        <li class="nav__item"><a href="/lecturers" class="nav__href">Лекторы</a></li>
+        <li class="nav__item"><a href="/homework" class="nav__href">Домашняя работа</a></li>
+    </ul>
+</nav>
 
+<div class="data">
+    <div class="data__actions">
+        <div class="data__action"><a href="/students/add">Добавить</a></div>
+        <div class="data__action">
+            <form action="/students/report" method="get">
+                <input name="name" type="text" placeholder="name">
+                <select name="type">
+                    <option th:each="format :${formats}" th:value="${format.toString()}"
+                            th:text="${format.getSubtype()}"></option>
+                </select>
+                <input type="submit" value="Создать отчет">
+            </form>
+        </div>
+    </div>
+    <table class="data__table">
+        <tr class="data__row">
+            <th class="column__name">Имя</th>
+            <th class="column__name">Почта</th>
+            <th class="column__name">Телефон</th>
+            <th class="column__name"></th>
+            <th class="column__name"></th>
+        </tr>
+        <tr class="data__row" th:each="student : ${students}">
+            <td class="data__item" th:text="${student.getName()}"></td>
+            <td class="data__item" th:text="${student.getEmail()}"></td>
+            <td class="data__item" th:text="${student.getPhone()}"></td>
+            <td class="data__item"><a th:href="@{'/students/' + ${student.getId()}}" th:text="Изменить"></a></td>
+            <td class="data__item">
+                <form th:method="DELETE" th:action="@{'/students/' + ${student.getId()}}">
+                    <label>
+                        <input th:type="submit" th:value="Удалить">
+                    </label>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

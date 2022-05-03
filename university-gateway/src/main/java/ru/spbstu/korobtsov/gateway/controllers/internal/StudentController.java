@@ -9,6 +9,7 @@ import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Student;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -27,6 +28,7 @@ public class StudentController {
     public String showAll(Model model) {
         var students = studentService.readAll();
         model.addAttribute("students", students);
+        model.addAttribute("formats", reportServiceMap.keySet());
         return "students/students";
     }
 
@@ -40,7 +42,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public String addOne(@RequestBody Student student,
+    public String addOne(@Valid Student student,
                          BindingResult result) {
         if (result.hasErrors()) {
             return "students/add-student";
@@ -50,8 +52,13 @@ public class StudentController {
         return "redirect:/students";
     }
 
+    @GetMapping(path = "/add")
+    public String showCreateForm() {
+        return "students/add-student";
+    }
+
     @PutMapping("/{id}")
-    public String update(@RequestBody Student student,
+    public String update(@Valid Student student,
                          @PathVariable String id,
                          BindingResult result) {
         if (result.hasErrors()) {
@@ -76,6 +83,7 @@ public class StudentController {
         var reportService = reportServiceMap.get(type);
         var report = reportService.generateReportByStudentName(name);
         model.addAttribute("report", report);
+        model.addAttribute("name", name);
         return "students/student-report";
     }
 }
