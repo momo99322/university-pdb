@@ -4,10 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
@@ -32,4 +29,5 @@ public class Student {
 
     @Length(min = 10, max = 11)
     private String phone;
+
 }
