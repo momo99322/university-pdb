@@ -3,7 +3,6 @@ package ru.spbstu.korobtsov.api.domain;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -26,7 +25,6 @@ public class Homework {
     @Length(min = 1)
     private String title;
 
-    @Nullable
     private String content;
 
     @Min(0)

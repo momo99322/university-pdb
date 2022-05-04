@@ -3,11 +3,13 @@ package ru.spbstu.korobtsov.api.domain;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Set;
+
+import static javax.persistence.CascadeType.REMOVE;
 
 @Entity
 @Getter
@@ -26,10 +28,7 @@ public class Lecture {
     @Length(min = 1)
     private String name;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Nullable
-    //если лекцию отменят, то у неё время будет null?
-    private Instant time;
+    private LocalDateTime time;
 
     @ManyToOne
     @JoinColumn(name = "lecturer_id")
@@ -37,4 +36,8 @@ public class Lecture {
 
     @ElementCollection
     public Map<Student, Boolean> attendance;
+
+    @OneToMany(cascade=REMOVE, mappedBy="lecture")
+    private Set<Attendance> attendances;
+
 }
