@@ -8,6 +8,8 @@ import ru.spbstu.korobtsov.api.exceptions.notfound.StudentNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.StudentServiceException;
 import ru.spbstu.korobtsov.core.repositories.StudentRepository;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -19,6 +21,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Student create(Student student) {
         log.debug("Creating {}", student);
         try {
@@ -31,6 +34,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Iterable<Student> readAll() {
         log.debug("Finding all");
         try {
@@ -43,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Student readOne(String id) {
         log.debug("Finding by id={}", id);
         try {
@@ -56,6 +61,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Student readOneByName(String name) {
         log.debug("Finding by name={}", name);
         try {
@@ -69,6 +75,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Student update(Student student) {
         log.debug("Updating {}", student);
         try {
@@ -83,6 +90,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void delete(String id) {
         log.debug("Deleting by id={}", id);
         try {

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.REMOVE;
@@ -34,5 +35,5 @@ public class Student {
     private String phone;
 
     @OneToMany(cascade=REMOVE, mappedBy="student")
-    private Set<Attendance> attendances;
+    private Set<Attendance> attendances = new HashSet<>();
 }
