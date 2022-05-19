@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.REMOVE;
@@ -34,7 +34,12 @@ public class Lecture {
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
-    @OneToMany(cascade = REMOVE, mappedBy = "lecture")
-    private Set<Attendance> attendances = new HashSet<>();
+    @ElementCollection
+    public Map<Student, Boolean> attendance;
 
+    @OneToMany(cascade = REMOVE, mappedBy = "lecture")
+    private Set<Attendance> attendances;
+
+    @OneToMany(cascade = REMOVE, mappedBy = "lecture")
+    private Set<Homework> homeworks;
 }

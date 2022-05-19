@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.LectureService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
 import ru.spbstu.korobtsov.api.exceptions.notfound.LectureNotFoundException;
+import ru.spbstu.korobtsov.api.exceptions.services.LectureServiceException;
 import ru.spbstu.korobtsov.core.repositories.LectureRepository;
 
 @Slf4j
@@ -20,47 +21,71 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Lecture create(Lecture lecture) {
         log.debug("Creating {}", lecture);
-        var createdLecture = lectureRepository.save(lecture);
-        log.debug("Created {}", createdLecture);
-        return createdLecture;
+        try {
+            var createdLecture = lectureRepository.save(lecture);
+            log.debug("Created {}", createdLecture);
+            return createdLecture;
+        } catch (Exception exception) {
+            throw new LectureServiceException("Error while creating %s, cause: %s".formatted(lecture, exception.getMessage()), exception);
+        }
     }
 
     @Override
     public Iterable<Lecture> readAll() {
         log.debug("Finding all");
-        var lectures = lectureRepository.findAll();
-        log.debug("Found {}", lectures);
-        return lectures;
+        try {
+            var lectures = lectureRepository.findAll();
+            log.debug("Found {}", lectures);
+            return lectures;
+        } catch (Exception exception) {
+            throw new LectureServiceException("Error while reading all, cause: %s".formatted(exception.getMessage()), exception);
+        }
     }
 
     @Override
     public Lecture readOne(String id) {
         log.debug("Finding by id={}", id);
-        var lecture = lectureRepository.findById(id).orElseThrow(() -> new LectureNotFoundException("Lecture with id=%s not found".formatted(id)));
-        log.debug("Found by id={}, {}", id, lecture);
-        return lecture;
+        try {
+            var lecture = lectureRepository.findById(id).orElseThrow(() -> new LectureNotFoundException("Lecture with id=%s not found".formatted(id)));
+            log.debug("Found by id={}, {}", id, lecture);
+            return lecture;
+        } catch (Exception exception) {
+            throw new LectureServiceException("Error while read lecture by id=%s, cause: %s".formatted(id, exception.getMessage()), exception);
+        }
     }
 
     @Override
     public Lecture readOneByName(String name) {
         log.debug("Finding by name={}", name);
-        var lecture = lectureRepository.findByName(name).orElseThrow(() -> new LectureNotFoundException("Lecture with name=%s not found".formatted(name)));
-        log.debug("Found by name={}, {}", name, lecture);
-        return lecture;
+        try {
+            var lecture = lectureRepository.findByName(name).orElseThrow(() -> new LectureNotFoundException("Lecture with name=%s not found".formatted(name)));
+            log.debug("Found by name={}, {}", name, lecture);
+            return lecture;
+        } catch (Exception exception) {
+            throw new LectureServiceException("Error while read lecture by name=%s, cause: %s".formatted(name, exception.getMessage()), exception);
+        }
     }
 
     @Override
     public Lecture update(Lecture lecture) {
         log.debug("Updating {}", lecture);
-        var updatedLecture = this.lectureRepository;
-        log.debug("Updated {}", updatedLecture);
-        return updatedLecture.save(lecture);
+        try {
+            var updatedLecture = this.lectureRepository;
+            log.debug("Updated {}", updatedLecture);
+            return updatedLecture.save(lecture);
+        } catch (Exception exception) {
+            throw new LectureServiceException("Error while updating %s, cause: %s".formatted(lecture, exception.getMessage()), exception);
+        }
     }
 
     @Override
     public void delete(String id) {
         log.debug("Deleting by id={}", id);
-        lectureRepository.deleteById(id);
-        log.debug("Deleted by id={}", id);
+        try {
+            lectureRepository.deleteById(id);
+            log.debug("Deleted by id={}", id);
+        } catch (Exception exception) {
+            throw new LectureServiceException("Error while deleting by id=%s, cause: %s".formatted(id, exception.getMessage()), exception);
+        }
     }
 }
