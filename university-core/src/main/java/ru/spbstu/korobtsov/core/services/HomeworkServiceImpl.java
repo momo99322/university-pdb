@@ -8,6 +8,8 @@ import ru.spbstu.korobtsov.api.exceptions.notfound.HomeworkNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.HomeworkServiceException;
 import ru.spbstu.korobtsov.core.repositories.HomeworkRepository;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Service
 public class HomeworkServiceImpl implements HomeworkService {
@@ -19,6 +21,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Homework create(Homework homework) {
         log.debug("Creating {}", homework);
         try {
@@ -31,6 +34,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Iterable<Homework> readAll() {
         log.debug("Finding all");
         try {
@@ -43,6 +47,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Homework readOne(String id) {
         log.debug("Finding by id={}", id);
         try {
@@ -55,6 +60,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Homework update(Homework homework) {
         log.debug("Updating {}", homework);
         try {
@@ -67,6 +73,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void delete(String id) {
         log.debug("Deleting by id={}", id);
         try {

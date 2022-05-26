@@ -8,6 +8,8 @@ import ru.spbstu.korobtsov.api.exceptions.notfound.LectureNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.LectureServiceException;
 import ru.spbstu.korobtsov.core.repositories.LectureRepository;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Service
 public class LectureServiceImpl implements LectureService {
@@ -19,6 +21,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecture create(Lecture lecture) {
         log.debug("Creating {}", lecture);
         try {
@@ -31,6 +34,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Iterable<Lecture> readAll() {
         log.debug("Finding all");
         try {
@@ -43,6 +47,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecture readOne(String id) {
         log.debug("Finding by id={}", id);
         try {
@@ -55,6 +60,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecture readOneByName(String name) {
         log.debug("Finding by name={}", name);
         try {
@@ -67,6 +73,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecture update(Lecture lecture) {
         log.debug("Updating {}", lecture);
         try {
@@ -79,6 +86,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void delete(String id) {
         log.debug("Deleting by id={}", id);
         try {

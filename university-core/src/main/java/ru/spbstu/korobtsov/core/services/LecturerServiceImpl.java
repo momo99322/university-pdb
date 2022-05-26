@@ -8,6 +8,8 @@ import ru.spbstu.korobtsov.api.exceptions.notfound.LecturerNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.LecturerServiceException;
 import ru.spbstu.korobtsov.core.repositories.LecturerRepository;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Service
 public class LecturerServiceImpl implements LecturerService {
@@ -19,6 +21,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecturer create(Lecturer lecturer) {
         log.debug("Creating {}", lecturer);
         try {
@@ -31,6 +34,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Iterable<Lecturer> readAll() {
         log.debug("Finding all");
         try {
@@ -44,6 +48,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecturer readOne(String id) {
         log.debug("Finding by id={}", id);
         try {
@@ -57,6 +62,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Lecturer update(Lecturer lecturer) {
         log.debug("Updating {}", lecturer);
         try {
@@ -69,6 +75,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void delete(String id) {
         log.debug("Deleting by id={}", id);
         try {
