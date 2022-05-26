@@ -34,7 +34,7 @@ public class Lecture {
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
-    @OneToMany(cascade=REMOVE, mappedBy="lecture")
+    @OneToMany(cascade = REMOVE, mappedBy = "lecture")
     private Set<Attendance> attendances = new HashSet<>();
 
 }

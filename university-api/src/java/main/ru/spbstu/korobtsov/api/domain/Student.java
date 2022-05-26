@@ -34,6 +34,6 @@ public class Student {
     @Length(min = 10, max = 11)
     private String phone;
 
-    @OneToMany(cascade=REMOVE, mappedBy="student")
+    @OneToMany(cascade = REMOVE, mappedBy = "student")
     private Set<Attendance> attendances = new HashSet<>();
 }
