@@ -10,6 +10,7 @@ import ru.spbstu.korobtsov.api.LecturerService;
 import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -30,6 +31,7 @@ public class LectureController {
     public String showAll(Model model) {
         var lectures = lectureService.readAll();
         model.addAttribute("lectures", lectures);
+        model.addAttribute("formats", reportServiceMap.keySet());
         return "lectures/lectures";
     }
 
@@ -52,12 +54,9 @@ public class LectureController {
     }
 
     @PostMapping
-    public String addOne(@RequestBody Lecture lecture,
+    public String addOne(@Valid Lecture lecture,
                          BindingResult result) {
-        if (result.hasErrors()) {
-            return "lectures/add-lecture";
-        }
-
+        lecture.setTime(java.time.LocalDateTime.now());
         lectureService.create(lecture);
         return "redirect:/lectures";
     }

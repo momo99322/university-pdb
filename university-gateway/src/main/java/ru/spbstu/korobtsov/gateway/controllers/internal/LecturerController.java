@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.spbstu.korobtsov.api.LecturerService;
 import ru.spbstu.korobtsov.api.domain.Lecturer;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/lecturers")
 public class LecturerController {
@@ -39,7 +41,7 @@ public class LecturerController {
     }
 
     @PostMapping
-    public String addOne(@RequestBody Lecturer lecturer,
+    public String addOne(@Valid Lecturer lecturer,
                          BindingResult result) {
         if (result.hasErrors()) {
             return "lecturers/add-lecturer";
@@ -50,7 +52,7 @@ public class LecturerController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody Lecturer lecturer,
+    public String update(@Valid Lecturer lecturer,
                          @PathVariable String id,
                          BindingResult result) {
         if (result.hasErrors()) {

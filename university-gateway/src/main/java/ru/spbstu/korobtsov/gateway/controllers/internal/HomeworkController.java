@@ -5,7 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.spbstu.korobtsov.api.HomeworkService;
+import ru.spbstu.korobtsov.api.LectureService;
+import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Homework;
+import ru.spbstu.korobtsov.api.domain.Lecture;
 
 import javax.validation.Valid;
 
@@ -14,9 +17,14 @@ import javax.validation.Valid;
 public class HomeworkController {
 
     private final HomeworkService homeworkService;
+    private final LectureService lectureService;
 
-    public HomeworkController(HomeworkService homeworkService) {
+    private final StudentService studentService;
+
+    public HomeworkController(HomeworkService homeworkService, LectureService lectureService, StudentService studentService) {
         this.homeworkService = homeworkService;
+        this.lectureService = lectureService;
+        this.studentService = studentService;
     }
 
     @GetMapping
@@ -24,6 +32,15 @@ public class HomeworkController {
         var homework = homeworkService.readAll();
         model.addAttribute("homework", homework);
         return "homework/homework";
+    }
+
+    @GetMapping(path = "/add")
+    public String showCreateForm(Model model) {
+        var lectures = lectureService.readAll();
+        var students = studentService.readAll();
+        model.addAttribute("students", students);
+        model.addAttribute("lectures", lectures);
+        return "homework/add-homework";
     }
 
     @GetMapping(path = "/{id}")
@@ -36,7 +53,7 @@ public class HomeworkController {
     }
 
     @PostMapping
-    public String addOne(@RequestBody @Valid Homework homework,
+    public String addOne(@Valid Homework homework,
                          BindingResult result) {
         if (result.hasErrors()) {
             return "homework/add-homework";
