@@ -4,55 +4,83 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/main.css">
-    <title>Students</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Студенты</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src=" https://code.jquery.com/jquery-1.11.2.js "></script>
 </head>
 <body>
-<nav class="nav__container">
-    <ul class="nav__items">
-        <li class="nav__item"><a href="/students" class="nav__href active">Студенты</a></li>
-        <li class="nav__item"><a href="/lectures" class="nav__href">Лекции</a></li>
-        <li class="nav__item"><a href="/lecturers" class="nav__href">Лекторы</a></li>
-        <li class="nav__item"><a href="/homework" class="nav__href">Домашняя работа</a></li>
-    </ul>
-</nav>
-
-<div class="data">
-    <div class="data__actions">
-        <div class="data__action"><a href="/students/add">Добавить</a></div>
-        <div class="data__action">
-            <form action="/students/report" method="get">
-                <input name="name" type="text" placeholder="name">
-                <select name="type">
-                    <option th:each="format :${formats}" th:value="${format.toString()}"
-                            th:text="${format.getSubtype()}"></option>
-                </select>
-                <input type="submit" value="Создать отчет">
-            </form>
+<div th:insert="~{header}"></div>
+<div class="container-fluid mt-3">
+    <div class="card">
+        <div class="card-body">
+            <form action="/students/report" method="get" hidden="" id="report"></form>
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="name">Имя</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Имя</div>
+                        </div>
+                        <input type="text" class="form-control" name="name" id="name" form="report" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="sr-only" for="name">Тип</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Тип</div>
+                        </div>
+                        <select name="type" class="form-control" form="report" required>
+                            <option th:each="format :${formats}" th:value="${format.toString()}"
+                                    th:text="${format.getSubtype()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block" form="report">Создать отчёт</button>
+                </div>
+                <div class="col">
+                    <a class="btn btn-warning btn-block" href="/students/add">
+                        Добавить студента
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <table class="data__table">
-        <tr class="data__row">
-            <th class="column__name">Имя</th>
-            <th class="column__name">Почта</th>
-            <th class="column__name">Телефон</th>
-            <th class="column__name"></th>
-            <th class="column__name"></th>
-        </tr>
-        <tr class="data__row" th:each="student : ${students}">
-            <td class="data__item" th:text="${student.getName()}"></td>
-            <td class="data__item" th:text="${student.getEmail()}"></td>
-            <td class="data__item" th:text="${student.getPhone()}"></td>
-            <td class="data__item"><a th:href="@{'/students/' + ${student.getId()}}" th:text="Изменить"></a></td>
-            <td class="data__item">
-                <form th:method="DELETE" th:action="@{'/students/' + ${student.getId()}}">
-                    <label>
-                        <input th:type="submit" th:value="Удалить">
-                    </label>
-                </form>
-            </td>
-        </tr>
-    </table>
+</div>
+<div class="container-fluid mt-3">
+    <div class="table">
+        <table class="data__table table table-bordered">
+            <thead class="thead-light">
+            <tr class="data__row">
+                <th class="column__name">Имя</th>
+                <th class="column__name">Почта</th>
+                <th class="column__name">Телефон</th>
+                <th class="column__name"></th>
+                <th class="column__name"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="data__row" th:each="student : ${students}">
+                <td class="data__item" th:text="${student.getName()}"></td>
+                <td class="data__item" th:text="${student.getEmail()}"></td>
+                <td class="data__item" th:text="${student.getPhone()}"></td>
+                <td class="data__item">
+                    <a class="btn btn-primary btn-block" th:href="@{'/students/' + ${student.getId()}}">Изменить
+                    </a></td>
+                <td class="data__item">
+                    <form th:method="DELETE" th:action="@{'/students/' + ${student.getId()}}">
+                        <button th:type="submit" class="btn btn-danger btn-block">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

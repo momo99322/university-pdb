@@ -24,6 +24,11 @@ public class LecturerController {
         return "lecturers/lecturers";
     }
 
+    @GetMapping(path = "/add")
+    public String showCreateForm(Model model) {
+        return "lecturers/add-lecturer";
+    }
+
     @GetMapping(path = "/{id}")
     public String showUpdateForm(@PathVariable String id,
                                  Model model) {

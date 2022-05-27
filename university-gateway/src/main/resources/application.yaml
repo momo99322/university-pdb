@@ -4,3 +4,7 @@ university:
     username: university_user
     password: university_pass
     url: jdbc:postgresql://localhost:5432/university
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
