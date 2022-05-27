@@ -56,7 +56,7 @@ public class LectureController {
     @PostMapping
     public String addOne(@Valid Lecture lecture,
                          BindingResult result) {
-        lecture.setTime(java.time.LocalDateTime.now());
+        lecture.setTime(java.time.LocalDateTime.now()); // если убрать эту штуку, то в lecture летит строка с датой, которую он не может распарсить (хз, как быстро поправить)
         lectureService.create(lecture);
         return "redirect:/lectures";
     }
