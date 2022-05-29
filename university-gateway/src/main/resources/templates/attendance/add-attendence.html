@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Добавить домашнюю работу</title>
+    <title>Добавить посещение</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -22,38 +22,30 @@
 <div class="container mt-3">
     <div class="card text-center">
         <div class="card-header">
-            <h4>Добавить домашнюю работу</h4>
+            <h4>Добавить посещение</h4>
         </div>
         <div class="card-body text-left">
-            <form action="/homework" th:method="POST" class="form__data" id="create">
+            <form action="/attendance" th:method="POST" class="form__data" id="create">
             </form>
             <div class="row">
-                <div class="col">
-                    <label>Название</label>
-                    <input th:name="title" type="text" class="form-control" form="create" required
-                           th:value="${homework.getTitle()}">
-                </div>
                 <div class="col">
                     <label>Студент</label>
                     <select name="student" class="form-control" form="create" required>
                         <option th:each="student :${students}" th:value="${student.getId()}"
-                                th:text="${student.getName()}"
-                                th:selected="${student.getId() == homework.getStudent().getId()}"></option>
+                                th:text="${student.getName()}"></option>
                     </select>
+                </div>
+                <div class="col">
+                    <label>Посещение</label>
+                    <input class="form-control" th:name="attendance" type="number" form="create" required min="0" max="5">
                 </div>
             </div>
             <div class="row mt-1">
                 <div class="col">
-                    <label>Оценка</label>
-                    <input class="form-control" th:name="mark" type="number" form="create" required min="0" max="5"
-                           th:value="${homework.getMark()}">
-                </div>
-                <div class="col">
                     <label>Лекция</label>
                     <select name="lecturer" class="form-control" form="create" required>
                         <option th:each="lecture :${lectures}" th:value="${lecture.getId()}"
-                                th:text="${lecture.getName()}"
-                                th:selected="${homework.getLecture().getId() == lecture.getId()}"></option>
+                                th:text="${lecture.getName()}"></option>
                     </select>
                 </div>
             </div>

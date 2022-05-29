@@ -44,6 +44,10 @@ public class HomeworkController {
     @GetMapping(path = "/{id}")
     public String showUpdateForm(@PathVariable String id, Model model) {
         var student = homeworkService.readOne(id);
+        var lectures = lectureService.readAll();
+        var students = studentService.readAll();
+        model.addAttribute("lectures", lectures);
+        model.addAttribute("students", students);
         model.addAttribute("homework", student);
         return "homework/update-homework";
     }
