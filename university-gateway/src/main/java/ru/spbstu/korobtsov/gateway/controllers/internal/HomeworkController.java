@@ -8,7 +8,6 @@ import ru.spbstu.korobtsov.api.HomeworkService;
 import ru.spbstu.korobtsov.api.LectureService;
 import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Homework;
-import ru.spbstu.korobtsov.api.domain.Lecture;
 
 import javax.validation.Valid;
 
@@ -18,7 +17,6 @@ public class HomeworkController {
 
     private final HomeworkService homeworkService;
     private final LectureService lectureService;
-
     private final StudentService studentService;
 
     public HomeworkController(HomeworkService homeworkService, LectureService lectureService, StudentService studentService) {
@@ -44,17 +42,14 @@ public class HomeworkController {
     }
 
     @GetMapping(path = "/{id}")
-    public String showUpdateForm(@PathVariable String id,
-                                 Model model) {
-
+    public String showUpdateForm(@PathVariable String id, Model model) {
         var student = homeworkService.readOne(id);
         model.addAttribute("homework", student);
         return "homework/update-homework";
     }
 
     @PostMapping
-    public String addOne(@Valid Homework homework,
-                         BindingResult result) {
+    public String addOne(@Valid Homework homework, BindingResult result) {
         if (result.hasErrors()) {
             return "homework/add-homework";
         }
@@ -64,9 +59,7 @@ public class HomeworkController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody @Valid Homework homework,
-                         @PathVariable String id,
-                         BindingResult result) {
+    public String update(@RequestBody @Valid Homework homework, @PathVariable String id, BindingResult result) {
         if (result.hasErrors()) {
             homework.setId(id);
             return "homework/update-homework";

@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
@@ -20,6 +21,7 @@ import javax.validation.constraints.Email;
 public class Lecturer {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;

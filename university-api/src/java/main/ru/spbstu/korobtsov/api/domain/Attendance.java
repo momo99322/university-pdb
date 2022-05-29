@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 public class Attendance {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
@@ -24,6 +26,7 @@ public class Attendance {
     private Lecture lecture;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "student_id")
     private Student student;
 

@@ -43,9 +43,7 @@ public class LectureController {
     }
 
     @GetMapping(path = "/{id}")
-    public String showUpdateForm(@PathVariable String id,
-                                 Model model) {
-
+    public String showUpdateForm(@PathVariable String id, Model model) {
         var student = lectureService.readOne(id);
         var lecturers = lecturerService.readAll();
         model.addAttribute("lecture", student);
@@ -54,17 +52,13 @@ public class LectureController {
     }
 
     @PostMapping
-    public String addOne(@Valid Lecture lecture,
-                         BindingResult result) {
-        lecture.setTime(java.time.LocalDateTime.now()); // если убрать эту штуку, то в lecture летит строка с датой, которую он не может распарсить (хз, как быстро поправить)
+    public String addOne(@Valid Lecture lecture) {
         lectureService.create(lecture);
         return "redirect:/lectures";
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody Lecture lecture,
-                         @PathVariable String id,
-                         BindingResult result) {
+    public String update(@RequestBody Lecture lecture, @PathVariable String id, BindingResult result) {
         if (result.hasErrors()) {
             lecture.setId(id);
             return "lectures/update-lecture";

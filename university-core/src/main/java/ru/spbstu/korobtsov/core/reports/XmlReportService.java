@@ -1,5 +1,7 @@
 package ru.spbstu.korobtsov.core.reports;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeType;
@@ -8,20 +10,17 @@ import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
 import ru.spbstu.korobtsov.api.domain.Student;
 
-import javax.xml.bind.JAXB;
-import java.io.StringWriter;
-
 import static org.springframework.util.MimeTypeUtils.APPLICATION_XML;
 
 @Slf4j
 @Service
 public class XmlReportService extends GenericReportService {
 
-    private final StringWriter sw;
+    private final XmlMapper xmlMapper;
 
-    public XmlReportService(StudentService studentService, LectureService lectureService) {
+    public XmlReportService(StudentService studentService, LectureService lectureService, XmlMapper xmlMapper) {
         super(log, studentService, lectureService);
-        this.sw = new StringWriter();
+        this.xmlMapper = xmlMapper;
     }
 
     @Override
@@ -30,14 +29,14 @@ public class XmlReportService extends GenericReportService {
     }
 
     @Override
+    @SneakyThrows
     public String marshallStudent(Student student) {
-        JAXB.marshal(student, sw);
-        return sw.toString();
+        return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
     }
 
     @Override
+    @SneakyThrows
     public String marshallLecture(Lecture lecture) {
-        JAXB.marshal(lecture, sw);
-        return sw.toString();
+        return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(lecture);
     }
 }

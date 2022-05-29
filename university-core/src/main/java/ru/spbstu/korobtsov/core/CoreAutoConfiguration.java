@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.core;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -33,6 +34,11 @@ public class CoreAutoConfiguration {
     @ConfigurationProperties(prefix = "university.datasource")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
+    }
+
+    @Bean
+    public XmlMapper xmlMapper() {
+        return new XmlMapper();
     }
 
     @Bean
