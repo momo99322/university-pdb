@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,15 +36,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="data__row" th:each="attendance : ${attendances}">
+                            <tr class="data__row" th:each="attendance : ${attendanceList}">
                                 <td class="data__item" th:text="${attendance.getStudent().getName()}"></td>
                                 <td class="data__item" th:text="${attendance.getLecture().getName()}"></td>
-                                <td class="data__item" th:text="${attendance.getAttendence()}"></td>
+                                <td class="data__item" th:text="${attendance.isAttendance()}"></td>
                                 <td class="data__item">
-                                    <a class="btn btn-primary btn-block" th:href="@{'/attendences/' + ${attendence.getId()}}">Изменить
+                                    <a class="btn btn-primary btn-block" th:href="@{'/attendance/' + ${attendance.getId()}}">Изменить
                                     </a></td>
                                 <td class="data__item">
-                                    <form th:method="DELETE" th:action="@{'/attendences/' + ${student.getId()}}">
+                                    <form th:method="DELETE" th:action="@{'/attendance/' + ${attendance.getStudent().getId()}}">
                                         <button th:type="submit" class="btn btn-danger btn-block">Удалить</button>
                                     </form>
                                 </td>
@@ -60,7 +60,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <a class="btn btn-warning btn-block" href="/attendences/add/">
+                            <a class="btn btn-warning btn-block" href="/attendance/add/">
                                 Добавить посещение
                             </a>
                         </div>

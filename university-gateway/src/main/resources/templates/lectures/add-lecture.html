@@ -38,7 +38,7 @@
                 </div>
                 <div class="col">
                     <label>Лектор</label>
-                    <select name="lecturer" class="form-control" form="create" required>
+                    <select th:name="lecturer" class="form-control" form="create" required>
                         <option th:each="lecturer :${lecturers}" th:value="${lecturer.getId()}"
                                 th:text="${lecturer.getName()}"></option>
                     </select>

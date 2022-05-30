@@ -27,8 +27,8 @@ public class HomeworkController {
 
     @GetMapping
     public String showAll(Model model) {
-        var homework = homeworkService.readAll();
-        model.addAttribute("homework", homework);
+        var homeworks = homeworkService.readAll();
+        model.addAttribute("homeworks", homeworks);
         return "homework/homework";
     }
 
@@ -43,12 +43,12 @@ public class HomeworkController {
 
     @GetMapping(path = "/{id}")
     public String showUpdateForm(@PathVariable String id, Model model) {
-        var student = homeworkService.readOne(id);
+        var homework = homeworkService.readOne(id);
         var lectures = lectureService.readAll();
         var students = studentService.readAll();
         model.addAttribute("lectures", lectures);
         model.addAttribute("students", students);
-        model.addAttribute("homework", student);
+        model.addAttribute("homework", homework);
         return "homework/update-homework";
     }
 

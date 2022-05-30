@@ -39,5 +39,5 @@ public class Student {
     private boolean massagePassed = false;
 
     @OneToMany(cascade = REMOVE, mappedBy = "student", fetch = FetchType.EAGER)
-    private Set<Attendance> attendances;
+    private Set<Attendance> attendance;
 }
