@@ -28,23 +28,28 @@
                         <table class="data__table table table-bordered">
                             <thead class="thead-light">
                             <tr class="data__row">
-                                <th class="column__name">Имя</th>
-                                <th class="column__name">Почта</th>
-                                <th class="column__name">Телефон</th>
+                                <th class="column__name">Название</th>
+                                <th class="column__name">Студент</th>
+                                <th class="column__name">Оценка</th>
+                                <th class="column__name">Лекция</th>
+                                <th class="column__name">Содержимое</th>
                                 <th class="column__name"></th>
                                 <th class="column__name"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="data__row" th:each="student : ${students}">
-                                <td class="data__item" th:text="${student.getName()}"></td>
-                                <td class="data__item" th:text="${student.getEmail()}"></td>
-                                <td class="data__item" th:text="${student.getPhone()}"></td>
+                            <tr class="data__row" th:each="homework : ${homeworks}">
+                                <td class="data__item" th:text="${homework.getTitle()}"></td>
+                                <td class="data__item" th:text="${homework.getStudent().getName()}"></td>
+                                <td class="data__item" th:text="${homework.getMark()}"></td>
+                                <td class="data__item" th:text="${homework.getLecture().getName()}"></td>
+                                <td class="data__item" th:text="${homework.getContent()}"></td>
                                 <td class="data__item">
-                                    <a class="btn btn-primary btn-block" th:href="@{'/students/' + ${student.getId()}}">Изменить
+                                    <a class="btn btn-primary btn-block"
+                                       th:href="@{'/homework/' + ${homework.getId()}}">Изменить
                                     </a></td>
                                 <td class="data__item">
-                                    <form th:method="DELETE" th:action="@{'/students/' + ${student.getId()}}">
+                                    <form th:method="DELETE" th:action="@{'/homework/' + ${homework.getId()}}">
                                         <button th:type="submit" class="btn btn-danger btn-block">Удалить</button>
                                     </form>
                                 </td>

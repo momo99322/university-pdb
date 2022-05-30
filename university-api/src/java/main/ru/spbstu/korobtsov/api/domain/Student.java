@@ -14,7 +14,6 @@ import static javax.persistence.CascadeType.REMOVE;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "students")

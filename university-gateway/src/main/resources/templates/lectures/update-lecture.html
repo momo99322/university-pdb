@@ -25,20 +25,20 @@
             <h4>Изменить лекцию</h4>
         </div>
         <div class="card-body text-left">
-            <form action="/lectures" th:method="POST" class="form__data" id="create">
+            <form th:action="@{'/lectures/'+${lecture.getId()}}" th:method="PUT" class="form__data" id="update">
             </form>
             <div class="row">
                 <div class="col">
                     <label>Имя</label>
-                    <input th:name="name" type="text" class="form-control" form="create" required th:value="${lecture.getName()}">
+                    <input th:name="name" type="text" class="form-control" form="update" required th:value="${lecture.getName()}">
                 </div>
                 <div class="col">
                     <label>Время</label>
-                    <input class="form-control date" th:name="time" type="datetime-local" form="create" required th:value="${lecture.getTime()}">
+                    <input class="form-control date" th:name="time" type="datetime-local" form="update" required th:value="${lecture.getTime()}">
                 </div>
                 <div class="col">
                     <label>Лектор</label>
-                    <select name="lecturer" class="form-control" form="create" required>
+                    <select name="lecturer" class="form-control" form="update" required>
                         <option th:each="lecturer :${lecturers}" th:value="${lecturer.getId()}"
                                 th:text="${lecturer.getName()}" th:selected="${lecture.getLecturer().getId() == lecturer.getId()}"></option>
                     </select>
@@ -46,7 +46,7 @@
             </div>
             <div class="row mt-3">
                 <div class="col">
-                    <button class="btn btn-primary btn-block" type="submit" form="create">Сохранить</button>
+                    <button class="btn btn-primary btn-block" type="submit" form="update">Сохранить</button>
                 </div>
                 <div class="col">
                     <a class="btn btn-block btn-danger" href="./">Отменить</a>

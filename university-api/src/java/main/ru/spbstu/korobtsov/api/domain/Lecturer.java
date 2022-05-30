@@ -14,7 +14,6 @@ import javax.validation.constraints.Email;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "lecturers")

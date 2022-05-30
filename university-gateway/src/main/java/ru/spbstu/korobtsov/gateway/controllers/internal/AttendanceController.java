@@ -45,8 +45,10 @@ public class AttendanceController {
     public String showUpdateForm(@PathVariable String id, Model model) {
         var students = studentService.readAll();
         var lectures = lectureService.readAll();
+        var attendance = attendanceService.readOne(id);
         model.addAttribute("lectures", lectures);
         model.addAttribute("students", students);
+        model.addAttribute("attendance", attendance);
         return "attendance/update-attendance";
     }
 
@@ -61,7 +63,7 @@ public class AttendanceController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody @Valid Attendance attendance, @PathVariable String id, BindingResult result) {
+    public String update(@Valid Attendance attendance, @PathVariable String id, BindingResult result) {
         if (result.hasErrors()) {
             attendance.setId(id);
             return "attendance/update-attendance";

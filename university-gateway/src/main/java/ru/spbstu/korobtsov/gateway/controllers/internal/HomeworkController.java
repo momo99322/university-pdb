@@ -63,7 +63,7 @@ public class HomeworkController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody @Valid Homework homework, @PathVariable String id, BindingResult result) {
+    public String update(@Valid Homework homework, @PathVariable String id, BindingResult result) {
         if (result.hasErrors()) {
             homework.setId(id);
             return "homework/update-homework";

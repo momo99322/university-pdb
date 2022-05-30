@@ -4,61 +4,72 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Изменить посещения</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Изменить посещение</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
 </head>
 <body>
 <div th:insert="~{header}"></div>
-<div class="container mt-3">
-    <div class="card text-center">
-        <div class="card-header">
-            <h4>Изменить посещение</h4>
-        </div>
-        <div class="card-body text-left">
-            <form action="/attendance" th:method="POST" class="form__data" id="create">
-            </form>
-            <div class="row">
-                <div class="col">
-                    <label>Студент</label>
-                    <select name="student" class="form-control" form="create" required>
-                        <option th:each="student :${students}" th:value="${student.getId()}"
-                                th:text="${student.getName()}"></option>
-                    </select>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>Изменить посещение</h4>
                 </div>
-                <div class="col">
-                    <label>Посещение</label>
-                    <input class="form-control" th:name="attendance" type="number" form="create" required min="0" max="5">
-                </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <label>Лекция</label>
-                    <select name="lecturer" class="form-control" form="create" required>
-                        <option th:each="lecture :${lectures}" th:value="${lecture.getId()}"
-                                th:text="${lecture.getName()}"></option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <button class="btn btn-primary btn-block" type="submit" form="create">Сохранить</button>
-                </div>
-                <div class="col">
-                    <a class="btn btn-block btn-danger" href="..">Отменить</a>
+                <div class="card-body text-left">
+                    <form th:action="@{'/attendance/'+${attendance.getId()}}" th:method="PUT" class="form__data"
+                          id="create"></form>
+                    <div class="row">
+                        <div class="col">
+                            <label>Студент</label>
+                            <select name="student" class="form-control" form="create" required>
+                                <option th:each="student :${students}" th:value="${student.getId()}"
+                                        th:text="${student.getName()}"
+                                        th:selected="${student.getId() == attendance.getStudent().getId()}"></option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="col mt-4">
+                                <input class="btn-check" th:name="attendance" type="checkbox" form="create"
+                                       id="attendance" th:checked="${attendance.isAttendance()}">
+                                <label class="btn btn-outline-warning text-dark" for="attendance">Посещение</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col">
+                            <label>Лекция</label>
+                            <select name="lecture" class="form-control" form="create" required>
+                                <option th:each="lecture :${lectures}" th:value="${lecture.getId()}"
+                                        th:text="${lecture.getName()}+' '+${lecture.getTime().toString()}"
+                                        th:selected="${lecture.getId() == attendance.getLecture().getId()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col d-grid gap-2 ">
+                            <button class="btn btn-primary" type="submit" form="create">Сохранить</button>
+                        </div>
+                        <div class="col d-grid gap-2">
+                            <a class="btn btn-danger" href=".">Отменить</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-3"></div>
 </div>
 </body>
 </html>

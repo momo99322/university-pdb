@@ -11,7 +11,6 @@ import javax.validation.constraints.Min;
 @Entity
 @Setter
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "homework")

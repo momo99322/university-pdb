@@ -58,7 +58,7 @@ public class LectureController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody Lecture lecture, @PathVariable String id, BindingResult result) {
+    public String update(@Valid Lecture lecture, @PathVariable String id, BindingResult result) {
         if (result.hasErrors()) {
             lecture.setId(id);
             return "lectures/update-lecture";
