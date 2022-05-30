@@ -60,7 +60,7 @@
             <div class="row mt-3">
                 <div class="col">
                     <label>Контент</label>
-                    <textarea type="text" th:name="content" rows="3" th:value="${homework.getContent()}"
+                    <textarea th:name="content" rows="3" th:text="${homework.getContent()}"
                               class="form-control" form="update"></textarea>
                 </div>
             </div>
