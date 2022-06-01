@@ -3,6 +3,7 @@ package ru.spbstu.korobtsov.core.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.HomeworkService;
+import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Homework;
 import ru.spbstu.korobtsov.api.exceptions.notfound.HomeworkNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.HomeworkServiceException;
@@ -15,9 +16,10 @@ import javax.transaction.Transactional;
 public class HomeworkServiceImpl implements HomeworkService {
 
     private final HomeworkRepository homeworkRepository;
-
-    public HomeworkServiceImpl(HomeworkRepository homeworkRepository) {
+    private final StudentService studentService;
+    public HomeworkServiceImpl(HomeworkRepository homeworkRepository, StudentService studentService) {
         this.homeworkRepository = homeworkRepository;
+        this.studentService = studentService;
     }
 
     @Override
@@ -66,6 +68,9 @@ public class HomeworkServiceImpl implements HomeworkService {
         try {
             var updatedHomework = homeworkRepository.save(homework);
             log.debug("Updated {}", updatedHomework);
+
+            studentService.checkStudentAverageMarkAndSendmessageIfItLess(updatedHomework.getStudent());
+
             return updatedHomework;
         } catch (Exception exception) {
             throw new HomeworkServiceException("Error while updating %s, cause: %s".formatted(homework, exception.getMessage()), exception);

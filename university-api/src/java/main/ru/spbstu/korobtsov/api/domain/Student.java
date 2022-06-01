@@ -44,4 +44,8 @@ public class Student {
 
     @OneToMany(cascade = REMOVE, mappedBy = "student", fetch = FetchType.EAGER)
     private Set<Attendance> attendance;
+
+    @JsonIgnore
+    @OneToMany(cascade = REMOVE, mappedBy = "student", fetch = FetchType.EAGER)
+    private Set<Homework> homework;
 }

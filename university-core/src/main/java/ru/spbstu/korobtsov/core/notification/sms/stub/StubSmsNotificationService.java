@@ -10,12 +10,12 @@ public class StubSmsNotificationService implements SmsNotificationService {
 
     @Override
     public void send(String from, String to, String message) {
-        log.debug("Sending message: from={}, to={}, message{}", from, to, message);
+        log.debug("Sending message: from={}, to={}, message={}", from, to, message);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        log.debug("Sent message: from={}, to={}, message{}", from, to, message);
+        log.debug("Sent message: from={}, to={}, message={}", from, to, message);
     }
 }

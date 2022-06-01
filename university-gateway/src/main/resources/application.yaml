@@ -4,6 +4,10 @@ university:
     username: university_user
     password: university_pass
     url: jdbc:postgresql://localhost:5432/university
+  sms:
+    phone: 88005553535
+    message: Студенты должны больше стараться!!!!
+    allowable-avg-grade: 4.0
 spring:
   jpa:
     hibernate:
