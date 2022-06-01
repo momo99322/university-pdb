@@ -31,12 +31,18 @@ public class JsonReportService extends GenericReportService {
     @Override
     @SneakyThrows
     public String marshallStudent(Student student) {
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
+        return objectMapper
+                .writer(STUDENT_FILTER_PROVIDER)
+                .withDefaultPrettyPrinter()
+                .writeValueAsString(student);
     }
 
     @Override
     @SneakyThrows
     public String marshallLecture(Lecture lecture) {
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(lecture);
+        return objectMapper
+                .writer(LECTURE_FILTER_PROVIDER)
+                .withDefaultPrettyPrinter()
+                .writeValueAsString(lecture);
     }
 }

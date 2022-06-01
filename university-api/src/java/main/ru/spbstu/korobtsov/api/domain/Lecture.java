@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import static javax.persistence.CascadeType.REMOVE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "lectures")
+@JsonFilter("lectureFilter")
 public class Lecture {
 
     @Id
@@ -39,11 +41,10 @@ public class Lecture {
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
-    @JsonIgnore
     @OneToMany(cascade = REMOVE, mappedBy = "lecture", fetch = FetchType.EAGER)
-    private Set<Attendance> attendances;
+    private Set<Attendance> attendance;
 
     @JsonIgnore
     @OneToMany(cascade = REMOVE, mappedBy = "lecture", fetch = FetchType.EAGER)
-    private Set<Homework> homeworks;
+    private Set<Homework> homework;
 }

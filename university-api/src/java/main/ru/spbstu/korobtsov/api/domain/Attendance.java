@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "attendance")
+@JsonFilter("attendanceFilter")
 public class Attendance {
 
     @Id
@@ -28,7 +30,6 @@ public class Attendance {
     private Lecture lecture;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "student_id")
     private Student student;
 

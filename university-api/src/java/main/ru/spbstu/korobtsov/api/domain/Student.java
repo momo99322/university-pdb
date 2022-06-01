@@ -1,5 +1,6 @@
 package ru.spbstu.korobtsov.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import static javax.persistence.CascadeType.REMOVE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "students")
+@JsonFilter("studentFilter")
 public class Student {
 
     @Id

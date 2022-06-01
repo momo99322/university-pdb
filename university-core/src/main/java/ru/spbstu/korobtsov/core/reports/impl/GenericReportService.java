@@ -1,5 +1,8 @@
 package ru.spbstu.korobtsov.core.reports.impl;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.slf4j.Logger;
 import ru.spbstu.korobtsov.api.LectureService;
 import ru.spbstu.korobtsov.api.StudentService;
@@ -9,6 +12,8 @@ import ru.spbstu.korobtsov.api.reports.ReportService;
 
 public abstract class GenericReportService implements ReportService {
 
+    protected static final FilterProvider STUDENT_FILTER_PROVIDER = createStudentFilterProvider();
+    protected static final FilterProvider LECTURE_FILTER_PROVIDER = createLectureFilterProvider();
     private final Logger log;
     private final StudentService studentService;
     private final LectureService lectureService;
@@ -40,5 +45,21 @@ public abstract class GenericReportService implements ReportService {
     public abstract String marshallStudent(Student student);
 
     public abstract String marshallLecture(Lecture lecture);
+
+    private static FilterProvider createStudentFilterProvider() {
+        var filterProvider = new SimpleFilterProvider();
+        filterProvider.addFilter("studentFilter", SimpleBeanPropertyFilter.serializeAllExcept());
+        filterProvider.addFilter("lectureFilter", SimpleBeanPropertyFilter.serializeAllExcept("attendance"));
+        filterProvider.addFilter("attendanceFilter", SimpleBeanPropertyFilter.serializeAllExcept("student"));
+        return filterProvider;
+    }
+
+    private static FilterProvider createLectureFilterProvider() {
+        var filterProvider = new SimpleFilterProvider();
+        filterProvider.addFilter("studentFilter", SimpleBeanPropertyFilter.serializeAllExcept("attendance"));
+        filterProvider.addFilter("lectureFilter", SimpleBeanPropertyFilter.serializeAllExcept());
+        filterProvider.addFilter("attendanceFilter", SimpleBeanPropertyFilter.serializeAllExcept("lecture"));
+        return filterProvider;
+    }
 
 }

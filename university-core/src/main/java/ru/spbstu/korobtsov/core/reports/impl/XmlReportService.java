@@ -31,12 +31,18 @@ public class XmlReportService extends GenericReportService {
     @Override
     @SneakyThrows
     public String marshallStudent(Student student) {
-        return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
+        return xmlMapper
+                .writer(STUDENT_FILTER_PROVIDER)
+                .withDefaultPrettyPrinter()
+                .writeValueAsString(student);
     }
 
     @Override
     @SneakyThrows
     public String marshallLecture(Lecture lecture) {
-        return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(lecture);
+        return xmlMapper
+                .writer(LECTURE_FILTER_PROVIDER)
+                .withDefaultPrettyPrinter()
+                .writeValueAsString(lecture);
     }
 }
