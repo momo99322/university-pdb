@@ -5,30 +5,29 @@ import org.springframework.ui.Model;
 import org.springframework.util.MimeType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Student;
+import ru.spbstu.korobtsov.api.reports.ReportServiceManager;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/students")
 public class StudentController {
 
     private final StudentService studentService;
-    private final Map<MimeType, ReportService> reportServiceMap;
+    private final ReportServiceManager reportServiceManager;
 
-    public StudentController(StudentService studentService, Map<MimeType, ReportService> reportServiceMap) {
+    public StudentController(StudentService studentService, ReportServiceManager reportServiceManager) {
         this.studentService = studentService;
-        this.reportServiceMap = reportServiceMap;
+        this.reportServiceManager = reportServiceManager;
     }
 
     @GetMapping
     public String showAll(Model model) {
         var students = studentService.readAll();
         model.addAttribute("students", students);
-        model.addAttribute("formats", reportServiceMap.keySet());
+        model.addAttribute("formats", reportServiceManager.getSuppoertedFormats());
         return "students/students";
     }
 
@@ -80,7 +79,7 @@ public class StudentController {
     public String getReportByStudentName(@RequestParam("name") String name,
                                          @RequestParam("type") MimeType type,
                                          Model model) {
-        var reportService = reportServiceMap.get(type);
+        var reportService = reportServiceManager.getReportService(type);
         var report = reportService.generateReportByStudentName(name);
         model.addAttribute("report", report);
         model.addAttribute("name", name);

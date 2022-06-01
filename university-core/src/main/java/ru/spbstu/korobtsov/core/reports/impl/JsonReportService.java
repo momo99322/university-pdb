@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.core.reports;
+package ru.spbstu.korobtsov.core.reports.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;

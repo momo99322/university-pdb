@@ -7,11 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.spbstu.korobtsov.api.LectureService;
 import ru.spbstu.korobtsov.api.LecturerService;
-import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
+import ru.spbstu.korobtsov.api.reports.ReportServiceManager;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/lectures")
@@ -19,11 +18,11 @@ public class LectureController {
 
     private final LectureService lectureService;
     private final LecturerService lecturerService;
-    private final Map<MimeType, ReportService> reportServiceMap;
+    private final ReportServiceManager reportServiceManager;
 
-    public LectureController(LectureService lectureService, LecturerService lecturerService, Map<MimeType, ReportService> reportServiceMap) {
+    public LectureController(LectureService lectureService, LecturerService lecturerService, ReportServiceManager reportServiceManager) {
         this.lectureService = lectureService;
-        this.reportServiceMap = reportServiceMap;
+        this.reportServiceManager = reportServiceManager;
         this.lecturerService = lecturerService;
     }
 
@@ -31,7 +30,7 @@ public class LectureController {
     public String showAll(Model model) {
         var lectures = lectureService.readAll();
         model.addAttribute("lectures", lectures);
-        model.addAttribute("formats", reportServiceMap.keySet());
+        model.addAttribute("formats", reportServiceManager.getSuppoertedFormats());
         return "lectures/lectures";
     }
 
@@ -78,7 +77,7 @@ public class LectureController {
     public String getReportByLectureName(@RequestParam("name") String name,
                                          @RequestParam("type") MimeType type,
                                          Model model) {
-        var reportService = reportServiceMap.get(type);
+        var reportService = reportServiceManager.getReportService(type);
         var report = reportService.generateReportByLectureName(name);
         model.addAttribute("report", report);
         model.addAttribute("name", name);

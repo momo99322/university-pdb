@@ -1,14 +1,17 @@
 package ru.spbstu.korobtsov.core;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.util.MimeType;
-import ru.spbstu.korobtsov.api.ReportService;
+import ru.spbstu.korobtsov.api.reports.ReportService;
 
 import java.util.List;
 import java.util.Map;
@@ -37,12 +40,17 @@ public class CoreAutoConfiguration {
     }
 
     @Bean
-    public XmlMapper xmlMapper() {
-        return new XmlMapper();
+    public XmlMapper xmlMapper(Jackson2ObjectMapperBuilder builder) {
+        return builder.createXmlMapper(true).build();
     }
 
     @Bean
-    public Map<MimeType, ReportService> reportServiceMap(List<ReportService> reportServices) {
+    public Jackson2ObjectMapperBuilderCustomizer objectMapperBuilderCustomizer() {
+        return builder -> builder.modulesToInstall(new JavaTimeModule());
+    }
+
+    @Bean
+    Map<MimeType, ReportService> reportServiceMap(List<ReportService> reportServices) {
         return reportServices.stream().collect(toMap(ReportService::getType, Function.identity()));
     }
 }

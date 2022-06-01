@@ -3,8 +3,8 @@ package ru.spbstu.korobtsov.gateway.controllers.rest;
 import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import ru.spbstu.korobtsov.api.LectureService;
-import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
+import ru.spbstu.korobtsov.api.reports.ReportService;
 
 import javax.validation.Valid;
 import java.util.Map;

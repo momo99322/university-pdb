@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.api;
+package ru.spbstu.korobtsov.api.reports;
 
 import org.springframework.util.MimeType;
 

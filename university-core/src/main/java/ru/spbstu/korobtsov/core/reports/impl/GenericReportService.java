@@ -1,11 +1,11 @@
-package ru.spbstu.korobtsov.core.reports;
+package ru.spbstu.korobtsov.core.reports.impl;
 
 import org.slf4j.Logger;
 import ru.spbstu.korobtsov.api.LectureService;
-import ru.spbstu.korobtsov.api.ReportService;
 import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Lecture;
 import ru.spbstu.korobtsov.api.domain.Student;
+import ru.spbstu.korobtsov.api.reports.ReportService;
 
 public abstract class GenericReportService implements ReportService {
 
