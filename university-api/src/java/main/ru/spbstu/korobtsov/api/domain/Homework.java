@@ -29,7 +29,7 @@ public class Homework {
 
     private String content;
 
-    @Min(0)
+    @Min(-1)
     @Max(5)
     @Column(columnDefinition = "integer default 0")
     private int mark;

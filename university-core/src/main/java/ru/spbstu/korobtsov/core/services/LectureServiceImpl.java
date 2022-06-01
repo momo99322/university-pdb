@@ -2,7 +2,10 @@ package ru.spbstu.korobtsov.core.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.spbstu.korobtsov.api.HomeworkService;
 import ru.spbstu.korobtsov.api.LectureService;
+import ru.spbstu.korobtsov.api.StudentService;
+import ru.spbstu.korobtsov.api.domain.Homework;
 import ru.spbstu.korobtsov.api.domain.Lecture;
 import ru.spbstu.korobtsov.api.exceptions.notfound.LectureNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.LectureServiceException;
@@ -15,9 +18,13 @@ import javax.transaction.Transactional;
 public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
+    private final StudentService studentService;
+    private final HomeworkService homeworkService;
 
-    public LectureServiceImpl(LectureRepository lectureRepository) {
+    public LectureServiceImpl(LectureRepository lectureRepository, StudentService studentService, HomeworkService homeworkService) {
         this.lectureRepository = lectureRepository;
+        this.studentService = studentService;
+        this.homeworkService = homeworkService;
     }
 
     @Override
@@ -26,6 +33,12 @@ public class LectureServiceImpl implements LectureService {
         log.debug("Creating {}", lecture);
         try {
             var createdLecture = lectureRepository.save(lecture);
+
+            studentService.readAll().forEach(
+                    student -> homeworkService.create(
+                            new Homework(null, "Дз по %s".formatted(createdLecture.getName()), "", -1, student, createdLecture))
+            );
+
             log.debug("Created {}", createdLecture);
             return createdLecture;
         } catch (Exception exception) {
