@@ -69,7 +69,7 @@ public class HomeworkServiceImpl implements HomeworkService {
             var updatedHomework = homeworkRepository.save(homework);
             log.debug("Updated {}", updatedHomework);
 
-            studentService.checkStudentAverageMarkAndSendmessageIfItLess(updatedHomework.getStudent());
+            studentService.checkStudentAverageMarkAndSendMessageIfItLessThanAllowed(updatedHomework.getStudent());
 
             return updatedHomework;
         } catch (Exception exception) {

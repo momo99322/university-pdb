@@ -117,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void checkStudentAverageMarkAndSendmessageIfItLess(Student student) {
+    public void checkStudentAverageMarkAndSendMessageIfItLessThanAllowed(Student student) {
         var average = student.getHomework()
                 .stream()
                 .mapToInt(Homework::getMark)
