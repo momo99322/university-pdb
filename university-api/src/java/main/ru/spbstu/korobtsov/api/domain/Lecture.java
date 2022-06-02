@@ -47,4 +47,14 @@ public class Lecture {
     @JsonIgnore
     @OneToMany(cascade = REMOVE, mappedBy = "lecture", fetch = FetchType.EAGER)
     private Set<Homework> homework;
+
+    @Override
+    public String toString() {
+        return "Lecture{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", time=" + time +
+                ", lecturer=" + lecturer +
+                '}';
+    }
 }

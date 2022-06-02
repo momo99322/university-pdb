@@ -1,37 +1,40 @@
-package ru.spbstu.korobtsov.core.services;
+package ru.spbstu.korobtsov.core.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.StudentService;
+import ru.spbstu.korobtsov.api.domain.Attendance;
 import ru.spbstu.korobtsov.api.domain.Homework;
 import ru.spbstu.korobtsov.api.domain.Student;
 import ru.spbstu.korobtsov.api.exceptions.notfound.StudentNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.StudentServiceException;
+import ru.spbstu.korobtsov.core.notification.email.EmailNotificationService;
 import ru.spbstu.korobtsov.core.notification.sms.SmsNotificationService;
+import ru.spbstu.korobtsov.core.properties.EmailSendingProperties;
+import ru.spbstu.korobtsov.core.properties.SmsSendingProperties;
 import ru.spbstu.korobtsov.core.repositories.StudentRepository;
+import ru.spbstu.korobtsov.core.services.InternalStudentService;
 
 import javax.transaction.Transactional;
+import java.util.function.Predicate;
 
 @Slf4j
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService, InternalStudentService {
 
     private final StudentRepository studentRepository;
     private final SmsNotificationService smsNotificationService;
+    private final EmailNotificationService emailNotificationService;
+    private final SmsSendingProperties smsSendingProperties;
 
-    @Value("${university.sms.phone}")
-    private String universityPhone;
+    private final EmailSendingProperties emailSendingProperties;
 
-    @Value("${university.sms.message}")
-    private String messageForStudent;
-
-    @Value("${university.sms.allowable-avg-grade}")
-    private Double allowableAverageGrade;
-
-    public StudentServiceImpl(StudentRepository studentRepository, SmsNotificationService smsNotificationService) {
+    public StudentServiceImpl(StudentRepository studentRepository, SmsNotificationService smsNotificationService, EmailNotificationService emailNotificationService, SmsSendingProperties smsSendingProperties, EmailSendingProperties emailSendingProperties) {
         this.studentRepository = studentRepository;
         this.smsNotificationService = smsNotificationService;
+        this.emailNotificationService = emailNotificationService;
+        this.smsSendingProperties = smsSendingProperties;
+        this.emailSendingProperties = emailSendingProperties;
     }
 
     @Override
@@ -118,15 +121,40 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void checkStudentAverageMarkAndSendMessageIfItLessThanAllowed(Student student) {
-        var average = student.getHomework()
+        log.debug("Checking average mark for {}", student);
+        var averageMark = student.getHomework()
                 .stream()
                 .mapToInt(Homework::getMark)
                 .filter(mark -> mark >= 0)
                 .average();
 
-        if (average.isPresent() && average.getAsDouble() < allowableAverageGrade) {
-            log.debug("{} has average grade {} less than allowable {}", student, average, allowableAverageGrade);
-            smsNotificationService.send(universityPhone, student.getPhone(), messageForStudent);
+        log.debug("{} has average mark={}", student, averageMark);
+        if (averageMark.isPresent() && averageMark.getAsDouble() < smsSendingProperties.getAllowableAvgGrade()) {
+            log.debug("{} has average grade {} less than allowed {}", student, averageMark.getAsDouble(), smsSendingProperties.getAllowableAvgGrade());
+            smsNotificationService.send(smsSendingProperties.getPhone(), student.getPhone(), smsSendingProperties.getMessage());
         }
+    }
+
+    @Override
+    public boolean checkStudentAttendance(Student student) {
+        log.debug("Checking attendance for {}", student);
+
+        var missedLecturesCount = student.getAttendance()
+                .stream()
+                .filter(Predicate.not(Attendance::isAttendance))
+                .count();
+
+        log.debug("{} has {} missed lectures", student, missedLecturesCount);
+        var needAttention = missedLecturesCount >= emailSendingProperties.getMaxAllowedMissedLectureCount();
+
+        if (needAttention) {
+            log.debug("{} has {} missed lectures more than allowed {}", student, missedLecturesCount, emailSendingProperties.getMaxAllowedMissedLectureCount());
+        }
+        return needAttention;
+    }
+
+    @Override
+    public void sendAttention(Student student) {
+        emailNotificationService.send(emailSendingProperties.getEmail(), student.getEmail(), emailSendingProperties.getMessageForStudent());
     }
 }

@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.core.services;
+package ru.spbstu.korobtsov.core.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -6,18 +6,25 @@ import ru.spbstu.korobtsov.api.LecturerService;
 import ru.spbstu.korobtsov.api.domain.Lecturer;
 import ru.spbstu.korobtsov.api.exceptions.notfound.LecturerNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.LecturerServiceException;
+import ru.spbstu.korobtsov.core.notification.email.EmailNotificationService;
+import ru.spbstu.korobtsov.core.properties.EmailSendingProperties;
 import ru.spbstu.korobtsov.core.repositories.LecturerRepository;
+import ru.spbstu.korobtsov.core.services.InternalLecturerService;
 
 import javax.transaction.Transactional;
 
 @Slf4j
 @Service
-public class LecturerServiceImpl implements LecturerService {
+public class LecturerServiceImpl implements LecturerService, InternalLecturerService {
 
     private final LecturerRepository lecturerRepository;
+    private final EmailNotificationService emailNotificationService;
+    private final EmailSendingProperties emailSendingProperties;
 
-    public LecturerServiceImpl(LecturerRepository lecturerRepository) {
+    public LecturerServiceImpl(LecturerRepository lecturerRepository, EmailNotificationService emailNotificationService, EmailSendingProperties emailSendingProperties) {
         this.lecturerRepository = lecturerRepository;
+        this.emailNotificationService = emailNotificationService;
+        this.emailSendingProperties = emailSendingProperties;
     }
 
     @Override
@@ -84,5 +91,10 @@ public class LecturerServiceImpl implements LecturerService {
         } catch (Exception exception) {
             throw new LecturerServiceException("Error while deleting by id=%s, cause: %s".formatted(id, exception.getMessage()), exception);
         }
+    }
+
+    @Override
+    public void sendAttention(Lecturer lecturer) {
+        emailNotificationService.send(emailSendingProperties.getEmail(), lecturer.getEmail(), emailSendingProperties.getMessageForLecturer());
     }
 }

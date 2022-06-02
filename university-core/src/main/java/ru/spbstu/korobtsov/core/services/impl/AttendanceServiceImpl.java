@@ -1,4 +1,4 @@
-package ru.spbstu.korobtsov.core.services;
+package ru.spbstu.korobtsov.core.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,8 @@ import ru.spbstu.korobtsov.api.domain.Attendance;
 import ru.spbstu.korobtsov.api.exceptions.notfound.AttendanceNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.AttendanceServiceException;
 import ru.spbstu.korobtsov.core.repositories.AttendanceRepository;
+import ru.spbstu.korobtsov.core.services.InternalLecturerService;
+import ru.spbstu.korobtsov.core.services.InternalStudentService;
 
 import javax.transaction.Transactional;
 
@@ -15,9 +17,16 @@ import javax.transaction.Transactional;
 public class AttendanceServiceImpl implements AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
+    private final InternalStudentService studentService;
 
-    public AttendanceServiceImpl(AttendanceRepository attendanceRepository) {
+    private final InternalLecturerService lecturerService;
+
+    public AttendanceServiceImpl(AttendanceRepository attendanceRepository,
+                                 InternalStudentService studentService,
+                                 InternalLecturerService lecturerService) {
         this.attendanceRepository = attendanceRepository;
+        this.studentService = studentService;
+        this.lecturerService = lecturerService;
     }
 
     @Override
@@ -27,6 +36,16 @@ public class AttendanceServiceImpl implements AttendanceService {
         try {
             var createdAttendance = attendanceRepository.save(attendance);
             log.debug("Created {}", createdAttendance);
+
+            var student = createdAttendance.getStudent();
+            var lecturer = createdAttendance.getLecture().getLecturer();
+
+            if (!createdAttendance.isAttendance() && studentService.checkStudentAttendance(student)) {
+
+                studentService.sendAttention(student);
+                lecturerService.sendAttention(lecturer);
+            }
+
             return createdAttendance;
         } catch (Exception exception) {
             throw new AttendanceServiceException("Error while creating %s, cause: %s".formatted(attendance, exception.getMessage()), exception);

@@ -42,4 +42,15 @@ public class Homework {
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
 
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", mark=" + mark +
+                ", student=" + student +
+                ", lecture=" + lecture +
+                '}';
+    }
 }

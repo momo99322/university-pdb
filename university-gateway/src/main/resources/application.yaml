@@ -8,6 +8,11 @@ university:
     phone: 88005553535
     message: Студенты должны больше стараться!!!!
     allowable-avg-grade: 4.0
+  email:
+    email: university@edu.ru
+    message-for-student: Не пропускай!!!
+    message-for-lecturer: Студент пропускает!!!
+    max-allowed-missed-lecture-count: 3
 spring:
   jpa:
     hibernate:

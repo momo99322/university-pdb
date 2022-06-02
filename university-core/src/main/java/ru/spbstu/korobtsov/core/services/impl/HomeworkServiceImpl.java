@@ -1,13 +1,13 @@
-package ru.spbstu.korobtsov.core.services;
+package ru.spbstu.korobtsov.core.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spbstu.korobtsov.api.HomeworkService;
-import ru.spbstu.korobtsov.api.StudentService;
 import ru.spbstu.korobtsov.api.domain.Homework;
 import ru.spbstu.korobtsov.api.exceptions.notfound.HomeworkNotFoundException;
 import ru.spbstu.korobtsov.api.exceptions.services.HomeworkServiceException;
 import ru.spbstu.korobtsov.core.repositories.HomeworkRepository;
+import ru.spbstu.korobtsov.core.services.InternalStudentService;
 
 import javax.transaction.Transactional;
 
@@ -16,8 +16,8 @@ import javax.transaction.Transactional;
 public class HomeworkServiceImpl implements HomeworkService {
 
     private final HomeworkRepository homeworkRepository;
-    private final StudentService studentService;
-    public HomeworkServiceImpl(HomeworkRepository homeworkRepository, StudentService studentService) {
+    private final InternalStudentService studentService;
+    public HomeworkServiceImpl(HomeworkRepository homeworkRepository, InternalStudentService studentService) {
         this.homeworkRepository = homeworkRepository;
         this.studentService = studentService;
     }

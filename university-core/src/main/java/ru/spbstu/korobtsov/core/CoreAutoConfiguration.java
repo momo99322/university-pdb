@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -30,6 +31,7 @@ import static java.util.stream.Collectors.toMap;
         }
 )
 @ComponentScan(basePackageClasses = CoreAutoConfiguration.class)
+@ConfigurationPropertiesScan(basePackageClasses = CoreAutoConfiguration.class)
 public class CoreAutoConfiguration {
 
     @Bean

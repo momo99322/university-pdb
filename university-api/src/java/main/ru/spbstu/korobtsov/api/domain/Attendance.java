@@ -35,4 +35,14 @@ public class Attendance {
 
     @Column(columnDefinition = "boolean default false")
     private boolean attendance;
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "id='" + id + '\'' +
+                ", lecture=" + lecture +
+                ", student=" + student +
+                ", attendance=" + attendance +
+                '}';
+    }
 }

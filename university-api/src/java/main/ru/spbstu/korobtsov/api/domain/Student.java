@@ -39,13 +39,20 @@ public class Student {
     @Length(min = 10, max = 11)
     private String phone;
 
-    @JsonIgnore
-    private boolean massagePassed = false;
-
     @OneToMany(cascade = REMOVE, mappedBy = "student", fetch = FetchType.EAGER)
     private Set<Attendance> attendance;
 
     @JsonIgnore
     @OneToMany(cascade = REMOVE, mappedBy = "student", fetch = FetchType.EAGER)
     private Set<Homework> homework;
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

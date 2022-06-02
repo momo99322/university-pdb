@@ -15,6 +15,4 @@ public interface StudentService {
     Student update(Student student);
 
     void delete(String id);
-
-    void checkStudentAverageMarkAndSendMessageIfItLessThanAllowed(Student student);
 }
